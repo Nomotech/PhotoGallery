@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>テスト</title>
+</head>
+<body>
+<script>
+    var file_name = new Array();
+    var file_path = new Array();
+    var file_url = new Array();
+    function fileListDirectory(files) {
+        var file_num = files.length;
+        
+        for (i=0; i<file_num; i++) {
+            file_name[i] = files[i].name;
+            file_path[i] = files[i].webkitRelativePath;    // 行Ａ
+            file_url[i] = window.URL.createObjectURL(files[i]) ;
+        }
+        var data = "";
+        for (i=0; i<file_num; i++) {
+            if (file_name[i].search(/.png/i) != -1 || file_name[i].search(/.jpg/i) != -1 || file_name[i].search(/.gif/i) != -1) {
+                console.log(file_name[i]);
+            }
+            data += file_path [i] + "<br>";
+        }
+        document.getElementById('表示場所').innerHTML = data;
+        console.log(files);
+    }
+</script>
+<p><input  type="file"
+    webkitdirectory directory                             
+    onChange="fileListDirectory(this.files)"
+    class="absolute"
+    >
+</p>
+<div id="表示場所" class="red">結果がここに表示されます。</div>
+</body>
+</html>

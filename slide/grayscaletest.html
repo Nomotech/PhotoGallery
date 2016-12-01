@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>画像処理</title>
+<script type="text/javascript">
+window.onload = function() {
+    var canvas = document.getElementById("c1");
+    var ctx = canvas.getContext("2d");
+    var img = new Image();
+    img.src = "FumiyaWatanabe.jpg";
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        var src = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var dst = ctx.createImageData(canvas.width, canvas.height);
+
+        for (var i = 0; i < src.data.length; i=i+4) {
+            var pixel = (src.data[i] + src.data[i+1] + src.data[i+2]) / 3;
+            dst.data[i] = dst.data[i+1] = dst.data[i+2] = pixel;
+            dst.data[i+3] = src.data[i+3];
+        }
+
+        ctx.putImageData(dst, 0, 0);
+    };
+};
+</script>
+</head>
+<body>
+  <canvas id="c1" width="10000" height="10000">
+</body>
+</html>
